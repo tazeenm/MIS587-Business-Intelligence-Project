@@ -1,0 +1,58 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.4.1
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+```{python}
+import gmplot
+import pandas as pd
+import xlrd
+```
+
+```{python}
+apikey = ''
+```
+
+```{python}
+emp_data = pd.read_excel('Data/filtered_employee.xlsx')
+emp_data.head(5)
+
+list(emp_data.columns)
+```
+
+```{python}
+latitudes = emp_data['Latitude']
+#print(latitudes)
+
+longitudes = emp_data['Longitude']
+#print(longitudes)
+```
+
+```{python}
+# Load Map - lat/long here is the center of the map for now & 14 is the zoom level
+gmap = gmplot.GoogleMapPlotter(32.232570, -110.951930, 14, apikey)
+```
+
+```{python}
+gmap.scatter(latitudes, longitudes, '#3B0B39', size=40, marker=False)
+gmap.draw("gmplot-scatter.html")
+```
+
+```{python}
+lat_list = list(emp_data['Latitude'].head(10))
+long_list = list(emp_data['Longitude'].head(10))
+```
+
+```{python}
+gmap.plot(lat_list, long_list, 'cornflowerblue', edge_width=10)
+gmap.draw("gmplot-route-1.html")
+```

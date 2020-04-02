@@ -1,0 +1,61 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.4.1
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+```{python}
+import pandas as pd
+import xlrd
+import folium
+#import sys
+```
+
+```{python}
+emp_data = pd.read_excel('/Users/tazeenmunnavar/MIS 587: BI Project/Data/filtered_employee.xlsx')
+```
+
+```{python}
+# folium base map
+def generateBaseMap(default_location=[32.232570, -110.951930], default_zoom_start=12):
+    base_map = folium.Map(location=default_location, control_scale=True, zoom_start=default_zoom_start)
+    return base_map
+```
+
+```{python}
+base_map = generateBaseMap()
+base_map
+```
+
+```{python}
+# Using only row 1 and row 2 of our data
+p1 = [emp_data['Latitude'].iloc[0], emp_data['Longitude'].iloc[0]]
+p2 = [emp_data['Latitude'].iloc[1], emp_data['Longitude'].iloc[1]]
+```
+
+```{python}
+# Creating a route
+folium.PolyLine(locations = [p1,p2], color="red", weight=2.5, opacity=1).add_to(base_map)
+```
+
+```{python}
+# Adding markers
+folium.Marker(location=p1, icon=folium.Icon(color='green')).add_to(base_map)
+folium.Marker(location=p2, icon=folium.Icon(color='red')).add_to(base_map)
+```
+
+```{python}
+base_map
+```
+
+```{python}
+
+```
